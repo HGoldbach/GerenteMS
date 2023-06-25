@@ -26,6 +26,7 @@ public class Gerente implements Serializable, Comparable<Gerente> {
     private String cpf;
     @Column(name="telefone_gerente")
     private String telefone;
+
     @Override
     public int compareTo(Gerente gerente) {
         return getNome().compareTo(gerente.getNome());

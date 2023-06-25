@@ -20,9 +20,6 @@ public class GerenteMsApplication {
 		return new ModelMapper();
 	}
 
-	@Bean
-	public ObjectMapper objectMapper() {
-		return new ObjectMapper();
-	}
+
 
 }

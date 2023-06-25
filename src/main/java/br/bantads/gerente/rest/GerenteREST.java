@@ -3,9 +3,12 @@ package br.bantads.gerente.rest;
 import br.bantads.gerente.dto.GerenteDTO;
 import br.bantads.gerente.model.Gerente;
 import br.bantads.gerente.repository.GerenteRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +26,8 @@ public class GerenteREST {
     private ModelMapper mapper;
     @Autowired
     private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @GetMapping("/gerente")
     public ResponseEntity<List<GerenteDTO>> listarTodos() {
@@ -43,7 +48,6 @@ public class GerenteREST {
     @PostMapping("/gerente")
     public ResponseEntity<GerenteDTO> inserirGerente(@RequestBody GerenteDTO gerente) {
         if (gerenteRepository.findByCpf(gerente.getCpf()) == null) {
-            gerenteRepository.save(mapper.map(gerente, Gerente.class));
             Gerente ger = gerenteRepository.findByCpf(gerente.getCpf());
             return ResponseEntity.status(201).body(mapper.map(ger, GerenteDTO.class));
         } else {
