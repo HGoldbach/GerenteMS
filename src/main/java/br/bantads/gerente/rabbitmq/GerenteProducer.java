@@ -1,5 +1,6 @@
 package br.bantads.gerente.rabbitmq;
 
+import br.bantads.gerente.dto.GerenteDTO;
 import br.bantads.gerente.model.Gerente;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,11 +20,5 @@ public class GerenteProducer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @PostMapping("/gerente")
-    ResponseEntity<?> enfileirarGerente(@RequestBody Gerente g) throws JsonProcessingException {
 
-        var json = objectMapper.writeValueAsString(g);
-        rabbitTemplate.convertAndSend("GERENTE", json);
-        return new ResponseEntity<>("Enfileirado: " + json, HttpStatus.OK);
-    }
 }

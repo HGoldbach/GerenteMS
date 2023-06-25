@@ -19,8 +19,5 @@ public class GerenteConsumer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @RabbitListener(queues="GERENTE")
-    public void receiveMessage(String msg) throws JsonMappingException, JsonProcessingException {
-        System.out.println("Recebida : " + msg);
-    }
+
 }
