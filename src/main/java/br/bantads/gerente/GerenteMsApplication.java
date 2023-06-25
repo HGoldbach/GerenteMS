@@ -20,6 +20,4 @@ public class GerenteMsApplication {
 		return new ModelMapper();
 	}
 
-
-
 }

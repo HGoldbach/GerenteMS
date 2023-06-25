@@ -15,5 +15,6 @@ public class GerenteDTO implements Serializable {
     private String email;
     private String telefone;
     private String cpf;
+    private String perfil;
 
 }

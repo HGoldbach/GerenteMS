@@ -51,7 +51,8 @@ public class GerenteREST {
             gerenteRepository.save(mapper.map(gerente, Gerente.class));
             Gerente ger = gerenteRepository.findByCpf(gerente.getCpf());
 
-
+            var jsonGerente = objectMapper.writeValueAsString(ger);
+            rabbitTemplate.convertAndSend("GERENTE", jsonGerente);
 
             return ResponseEntity.status(201).body(mapper.map(ger, GerenteDTO.class));
         } else {
