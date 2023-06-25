@@ -46,9 +46,14 @@ public class GerenteREST {
     }
 
     @PostMapping("/gerente")
-    public ResponseEntity<GerenteDTO> inserirGerente(@RequestBody GerenteDTO gerente) {
+    public ResponseEntity<GerenteDTO> inserirGerente(@RequestBody GerenteDTO gerente) throws JsonProcessingException {
         if (gerenteRepository.findByCpf(gerente.getCpf()) == null) {
+            gerenteRepository.save(mapper.map(gerente, Gerente.class));
             Gerente ger = gerenteRepository.findByCpf(gerente.getCpf());
+
+            var jsonGerente = objectMapper.writeValueAsString(ger);
+            rabbitTemplate.convertAndSend("GERENTE", jsonGerente);
+
             return ResponseEntity.status(201).body(mapper.map(ger, GerenteDTO.class));
         } else {
             return ResponseEntity.status(400).build();
